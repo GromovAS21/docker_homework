@@ -14,7 +14,9 @@ class User(AbstractUser):
         unique=True,
     )
     telephone = models.PositiveIntegerField(
-        verbose_name="Номер телефона"
+        verbose_name="Номер телефона",
+        blank=True,
+        null=True,
     )
     city = models.CharField(
         max_length=50,
