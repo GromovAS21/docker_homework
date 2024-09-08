@@ -3,7 +3,7 @@ from rest_framework import serializers
 from materials.models import Course, Lesson
 
 
-class CourseSerializer(serializers.Serializer):
+class CourseSerializer(serializers.ModelSerializer):
     """
     Сериализатор для модели Курса
     """
@@ -12,7 +12,7 @@ class CourseSerializer(serializers.Serializer):
         fields = "__all__"
 
 
-class LessonSerializer(serializers.Serializer):
+class LessonSerializer(serializers.ModelSerializer):
     """
     Сериализатор для модели урока
     """

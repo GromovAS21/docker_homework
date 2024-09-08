@@ -45,7 +45,9 @@ class Lesson(models.Model):
         verbose_name="Название урока"
     )
     description = models.TextField(
-        verbose_name="Описание урока"
+        verbose_name="Описание урока",
+        blank=True,
+        null=True
     )
     image = models.ImageField(
         upload_to='course/',
