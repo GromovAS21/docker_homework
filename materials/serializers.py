@@ -8,6 +8,7 @@ class LessonSerializer(serializers.ModelSerializer):
     """
     Сериализатор для модели урока
     """
+
     class Meta:
         model = Lesson
         fields = "__all__"
@@ -17,8 +18,9 @@ class CourseSerializer(serializers.ModelSerializer):
     """
     Сериализатор для модели Курса
     """
+
     count_lessons = SerializerMethodField()
-    lessons = LessonSerializer(source='lesson_set', many=True)
+    lessons = LessonSerializer(source="lesson_set", many=True)
 
     class Meta:
         model = Course
@@ -31,14 +33,11 @@ class CourseSerializer(serializers.ModelSerializer):
         return Lesson.objects.filter(course=obj).count()
 
 
-
-
-
 class LessonSerializer(serializers.ModelSerializer):
     """
     Сериализатор для модели урока
     """
+
     class Meta:
         model = Lesson
         fields = "__all__"
-

@@ -5,6 +5,7 @@ class Course(models.Model):
     """
     Модель курса
     """
+
     title = models.CharField(
         max_length=50,
         verbose_name="Название курса",
@@ -22,7 +23,7 @@ class Course(models.Model):
     )
 
     class Meta:
-        verbose_name = "Курс",
+        verbose_name = ("Курс",)
         verbose_name_plural = "Курсы"
 
     def __str__(self):
@@ -33,6 +34,7 @@ class Lesson(models.Model):
     """
     Модель урока
     """
+
     course = models.ForeignKey(
         Course,
         verbose_name="Курс",
@@ -65,8 +67,7 @@ class Lesson(models.Model):
     class Meta:
         verbose_name = "Урок"
         verbose_name_plural = "Уроки"
-        ordering = ('id',)
+        ordering = ("id",)
 
     def __str__(self):
         return self.title
-

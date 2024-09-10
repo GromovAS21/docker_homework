@@ -8,11 +8,12 @@ class User(AbstractUser):
     """
     Модель пользователя
     """
+
     username = None
 
     email = models.EmailField(
         max_length=50,
-        verbose_name='Email',
+        verbose_name="Email",
         unique=True,
     )
     telephone = models.PositiveIntegerField(
@@ -39,7 +40,7 @@ class User(AbstractUser):
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
-        ordering = ('id',)
+        ordering = ("id",)
 
     def __str__(self):
         return self.email
@@ -50,8 +51,8 @@ class Payment(models.Model):
     Модель Платежа
     """
     STATUS_CHOICES = [
-        ('Наличные', 'Наличные'),
-        ('Перевод на счет', 'Перевод на счет')
+        ("Наличные", "Наличные"),
+        ("Перевод на счет", "Перевод на счет")
     ]
     user = models.ForeignKey(
         User,
@@ -59,7 +60,7 @@ class Payment(models.Model):
         verbose_name="Пользователь",
         null=True,
         blank=True,
-        related_name="payments",
+        related_name="users",
     )
     payment_date = models.DateTimeField(
         verbose_name="Дата платежа",
@@ -73,7 +74,7 @@ class Payment(models.Model):
         verbose_name="Оплаченный курс",
         null=True,
         blank=True,
-        related_name="payments",
+        related_name="payments_course",
     )
     paid_lesson = models.ForeignKey(
         Lesson,
@@ -81,7 +82,7 @@ class Payment(models.Model):
         verbose_name="Оплаченный урок",
         null=True,
         blank=True,
-        related_name="payments",
+        related_name="payments_lesson",
     )
     amount = models.IntegerField(
         verbose_name="Сумма платежа",
@@ -90,7 +91,7 @@ class Payment(models.Model):
     )
     method = models.CharField(
         choices=STATUS_CHOICES,
-        default='Перевод на счет',
+        default="Перевод на счет",
         max_length=50,
         verbose_name="Метод оплаты",
     )
@@ -98,8 +99,7 @@ class Payment(models.Model):
     class Meta:
         verbose_name = "Платеж"
         verbose_name_plural = "Платежи"
-        ordering = ('-payment_date',)
+        ordering = ("-payment_date",)
 
     def __str__(self):
         return f"{self.paid_course if self.paid_course else self.paid_lesson} - {self.payment_date} ({self.user})"
-

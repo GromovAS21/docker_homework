@@ -10,14 +10,21 @@ class Command(BaseCommand):
         """
 
         course_list = [
-            {"title": "Курс программирования", "description": "Программа в светлое будущее"},
-            {"title": "Курс Чтения", "description": "Учимся читать по слогам"}
+            {
+                "title": "Курс программирования",
+                "description": "Программа в светлое будущее",
+            },
+            {"title": "Курс Чтения", "description": "Учимся читать по слогам"},
         ]
         lesson_list = [
             {"course_id": 1, "title": "python3", "description": "Питон"},
             {"course_id": 1, "title": "JavaScript", "description": "Скрипты"},
             {"course_id": 2, "title": "Букварь", "description": "Буквы"},
-            {"course_id": 2, "title": "Литература", "description": "школьная программа"},
+            {
+                "course_id": 2,
+                "title": "Литература",
+                "description": "школьная программа",
+            },
         ]
 
         course_for_create = []
@@ -31,7 +38,3 @@ class Command(BaseCommand):
             lesson_for_create.append(Lesson(**lesson))
 
         Lesson.objects.bulk_create(lesson_for_create)
-
-
-
-
