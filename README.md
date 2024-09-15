@@ -6,6 +6,13 @@
 
 3) [fill_payments.py](users%2Fmanagement%2Fcommands%2Ffill_payments.py)
 
-Для создания групп используется фикстура:
+Фикстуры:
 
-[sgroups.json](users%2Ffixtures%2Fsgroups.json)
+[groups.json](users%2Ffixtures%2Fgroups.json) -группы
+
+[users.json](users%2Ffixtures%2Fusers.json) - пользователи
+
+[courses.json](materials%2Ffixtures%2Fcourses.json) - курсы
+
+[lessons.json](materials%2Ffixtures%2Flessons.json) - уроки
+

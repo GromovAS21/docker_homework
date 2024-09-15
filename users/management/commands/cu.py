@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         users_list = [
-            {"email": "test@test.ru", "city": "Cheboksary"},
+            {"email": "test@test.ru", "city": "Cheboksary", "groups": [1]},
             {"email": "test1@test.ru"},
         ]
 

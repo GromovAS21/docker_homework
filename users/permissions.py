@@ -19,3 +19,11 @@ class IsOwner(permissions.BasePermission):
             return True
         return False
 
+
+class IsUserProfile(permissions.BasePermission):
+    """
+    Проверяет, является ли профиль текущего пользовател
+    """
+
+    def has_object_permission(self, request, view, obj):
+        return request.user.id == obj.id
