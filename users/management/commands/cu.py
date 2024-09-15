@@ -10,13 +10,14 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         users_list = [
-            {"email": "test@test.ru", "password": "Qwerty", "city": "Cheboksary"},
-            {"email": "test1@test.ru", "password": "Qwerty"},
+            {"email": "test@test.ru", "city": "Cheboksary"},
+            {"email": "test1@test.ru"},
         ]
 
         users_for_create = []
 
         for user in users_list:
             users_for_create.append(User(**user))
+            users_for_create[-1].set_password("Qwerty")
 
         User.objects.bulk_create(users_for_create)

@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
     Сериализатор для модели User
     """
 
-    payments = PaymentSerializer(source="users", many=True)
+    payments = PaymentSerializer(source="users", many=True, read_only=True)
 
     class Meta:
         model = User

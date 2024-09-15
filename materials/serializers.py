@@ -31,13 +31,3 @@ class CourseSerializer(serializers.ModelSerializer):
         Возвращает количество уроков в курсе
         """
         return Lesson.objects.filter(course=obj).count()
-
-
-class LessonSerializer(serializers.ModelSerializer):
-    """
-    Сериализатор для модели урока
-    """
-
-    class Meta:
-        model = Lesson
-        fields = "__all__"
