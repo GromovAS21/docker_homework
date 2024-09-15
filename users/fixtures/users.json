@@ -1,0 +1,84 @@
+[
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$x4iIpA7hJGa0u7lXeT7jQp$rDlmhvhMwNu9xVIUJCB+KVW4TK/qaDpQH9vbofHn09M=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-09-15T14:24:42.802Z",
+      "email": "test2@test.ru",
+      "telephone": null,
+      "city": null,
+      "avatar": "",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$KRE9qJcp11yPxQ8ITLtrun$PHVuDpFfz798fxAUyavRp6yn4S1VXgurXUcdkVli3q0=",
+      "last_login": "2024-09-15T14:48:23.804Z",
+      "is_superuser": true,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-09-15T14:43:31.123Z",
+      "email": "admin@test.ru",
+      "telephone": null,
+      "city": null,
+      "avatar": "",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$Bhm6dBGAKJADaAWp036QLS$qoIpwcpetcfQkJnRA6X82jDf7SmA2yWABR+Gv94Lef8=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-09-15T14:51:53Z",
+      "email": "test@test.ru",
+      "telephone": null,
+      "city": "Cheboksary",
+      "avatar": "",
+      "groups": [
+        1
+      ],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$yIHu2GmjcCLE5BYZC11Ea5$hv4jAWiuwfA33nQ5Zny72tpd8P6x30+fUTjJ6l860RE=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-09-15T14:51:53.628Z",
+      "email": "test1@test.ru",
+      "telephone": null,
+      "city": null,
+      "avatar": "",
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]

@@ -18,8 +18,16 @@ class UserSerializer(serializers.ModelSerializer):
     Сериализатор для модели User
     """
 
-    payments = PaymentSerializer(source="users", many=True)
+    payments = PaymentSerializer(source="users", many=True, read_only=True)
 
     class Meta:
         model = User
         fields = "__all__"
+
+class ProfileNotUserSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для модели User если осуществляется просмотр чужого профиля
+    """
+    class Meta:
+        model = User
+        exclude = ("password", "last_name")
