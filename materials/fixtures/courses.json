@@ -1,0 +1,1 @@
+[{"model": "materials.course", "pk": 1, "fields": {"title": "Курс программирования!", "description": "Программа в светлое будущее", "image": "", "owner": 6}}, {"model": "materials.course", "pk": 2, "fields": {"title": "Курс Чтения", "description": "Учимся читать по слогам", "image": "", "owner": 3}}]
