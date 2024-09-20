@@ -2,12 +2,14 @@ from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
 
 from materials.models import Course, Lesson
+from materials.validators import url_validator
 
 
 class LessonSerializer(serializers.ModelSerializer):
     """
     Сериализатор для модели урока
     """
+    url_video = serializers.CharField(validators=[url_validator])
 
     class Meta:
         model = Lesson

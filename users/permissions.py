@@ -22,7 +22,7 @@ class IsOwner(permissions.BasePermission):
 
 class IsUserProfile(permissions.BasePermission):
     """
-    Проверяет, является ли профиль текущего пользовател
+    Проверяет, является ли это профиль текущего пользователя
     """
 
     def has_object_permission(self, request, view, obj):
