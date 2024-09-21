@@ -37,10 +37,7 @@ class CourseSerializer(serializers.ModelSerializer):
 
     def get_status_subscribed(self, obj):
         request = self.context.get('request')
-        if request:
-            user = request.user
-            return Subscription.objects.filter(course=obj, user=user).exists()
-        return False
+        return Subscription.objects.filter(course=obj, user=request.user).exists()
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):

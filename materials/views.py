@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 
 from materials.models import Course, Lesson, Subscription
 from materials.paginators import ViewPagination
-from materials.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
+from materials.serializers import CourseSerializer, LessonSerializer
 from users.permissions import IsModer, IsOwner
 
 
@@ -92,8 +92,6 @@ class SubscriptionViewSet(APIView):
     """
     API эндпоинт для подписки на урок
     """
-    serializer_class = SubscriptionSerializer
-    queryset = Subscription.objects.all()
 
     def post(self, request):
         user_id = request.user

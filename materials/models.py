@@ -94,7 +94,7 @@ class Subscription(models.Model):
     Модель подписки
     """
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        "users.User",
         on_delete=models.CASCADE,
         verbose_name="Пользователь"
     )
@@ -103,3 +103,11 @@ class Subscription(models.Model):
         on_delete=models.CASCADE,
         verbose_name="Курс"
     )
+
+    class Meta:
+        verbose_name = "Подписка"
+        verbose_name_plural = "Подписки"
+        unique_together = ("id",)
+
+    def __str__(self):
+        return f"{self.user} - {self.course}"
