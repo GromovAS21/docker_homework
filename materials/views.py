@@ -1,6 +1,6 @@
 from rest_framework import generics, viewsets
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -23,7 +23,7 @@ class CourseViewSet(viewsets.ModelViewSet):
         if self.action == "create":
             self.permission_classes = (~IsModer,)
         elif self.action in ["update", "retrieve"]:
-            self.permission_classes = (IsModer | IsOwner,)
+            self.permission_classes = (IsModer | IsOwner | IsAdminUser,)
         elif self.action == ["destroy"]:
             self.permission_classes = (~IsModer | IsOwner,)
         return super().get_permissions()
