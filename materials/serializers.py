@@ -1,13 +1,15 @@
 from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
 
-from materials.models import Course, Lesson
+from materials.models import Course, Lesson, Subscription
+from materials.validators import url_validator
 
 
 class LessonSerializer(serializers.ModelSerializer):
     """
     Сериализатор для модели урока
     """
+    url_video = serializers.CharField(validators=[url_validator])
 
     class Meta:
         model = Lesson
@@ -20,7 +22,8 @@ class CourseSerializer(serializers.ModelSerializer):
     """
 
     count_lessons = SerializerMethodField()
-    lessons = LessonSerializer(source="lesson_set", many=True)
+    lessons = LessonSerializer(source="lesson_set", many=True, read_only=True)
+    status_subscribed = SerializerMethodField()
 
     class Meta:
         model = Course
@@ -31,3 +34,17 @@ class CourseSerializer(serializers.ModelSerializer):
         Возвращает количество уроков в курсе
         """
         return Lesson.objects.filter(course=obj).count()
+
+    def get_status_subscribed(self, obj):
+        request = self.context.get('request')
+        return Subscription.objects.filter(course=obj, user=request.user).exists()
+
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для модели подписки
+    """
+
+    class Meta:
+        model = Subscription
+        fields = "__all__"

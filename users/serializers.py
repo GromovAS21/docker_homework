@@ -24,6 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = "__all__"
 
+
 class ProfileNotUserSerializer(serializers.ModelSerializer):
     """
     Сериализатор для модели User если осуществляется просмотр чужого профиля

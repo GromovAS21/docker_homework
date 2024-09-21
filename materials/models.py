@@ -1,5 +1,7 @@
 from django.db import models
 
+from config import settings
+
 
 class Course(models.Model):
     """
@@ -85,3 +87,27 @@ class Lesson(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Subscription(models.Model):
+    """
+    Модель подписки
+    """
+    user = models.ForeignKey(
+        "users.User",
+        on_delete=models.CASCADE,
+        verbose_name="Пользователь"
+    )
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        verbose_name="Курс"
+    )
+
+    class Meta:
+        verbose_name = "Подписка"
+        verbose_name_plural = "Подписки"
+        unique_together = ("id",)
+
+    def __str__(self):
+        return f"{self.user} - {self.course}"

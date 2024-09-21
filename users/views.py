@@ -19,9 +19,9 @@ class UserViewSet(viewsets.ModelViewSet):
         if self.action == "create":
             self.permission_classes = (AllowAny,)
         elif self.action == "list":
-            self.permission_classes = (IsAdminUser,)
+            self.permission_classes = (IsAdminUser, )
         elif self.action == "update":
-            self.permission_classes = (IsUserProfile,)
+            self.permission_classes = (IsUserProfile | IsUserProfile)
         elif self.action == "destroy":
             self.permission_classes = (IsUserProfile,)
         return super().get_permissions()
@@ -37,10 +37,6 @@ class UserViewSet(viewsets.ModelViewSet):
             if self.request.user.pk != object.pk:
                 return ProfileNotUserSerializer
         return UserSerializer
-
-
-
-
 
 
 class PaymentViewSet(viewsets.ModelViewSet):
