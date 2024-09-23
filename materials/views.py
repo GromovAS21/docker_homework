@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 
 from materials.models import Course, Lesson, Subscription
 from materials.paginators import ViewPagination
-from materials.serializers import CourseSerializer, LessonSerializer
+from materials.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
 from users.permissions import IsModer, IsOwner
 
 
@@ -16,13 +16,19 @@ from users.permissions import IsModer, IsOwner
     operation_description="Контроллер для получения списка всех курсов"
 ))
 @method_decorator(name='retrieve', decorator=swagger_auto_schema(
-    operation_description="Контроллер для получения конкретного курсов"
+    operation_description="Контроллер для получения конкретного курса"
 ))
 @method_decorator(name='create', decorator=swagger_auto_schema(
     operation_description="Контроллер для создания курса"
 ))
 @method_decorator(name='update', decorator=swagger_auto_schema(
     operation_description="Контроллер для обновления информации о курсе"
+))
+@method_decorator(name='partial_update', decorator=swagger_auto_schema(
+    operation_description="Контроллер для частичного изменения информации о курсе"
+))
+@method_decorator(name='destroy', decorator=swagger_auto_schema(
+    operation_description="Контроллер для удаления курса"
 ))
 class CourseViewSet(viewsets.ModelViewSet):
     """
@@ -57,6 +63,9 @@ class LessonCreateAPIView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated, ~IsModer)
 
     def perform_create(self, serializer):
+        """
+        Добавление владельца к уроку при создание
+        """
         lesson = serializer.save()
         lesson.owner = self.request.user
         lesson.save()
@@ -104,10 +113,14 @@ class LessonDestroyAPIView(generics.DestroyAPIView):
 
 class SubscriptionViewSet(APIView):
     """
-    API эндпоинт для подписки на урок
+    API эндпоинт для создания подписки на курс
     """
 
+    @swagger_auto_schema(request_body=SubscriptionSerializer)
     def post(self, request):
+        """
+        Создание или удаление подписки на курс
+        """
         user_id = request.user
         course_id = request.data.get('course_id')
         course_item = get_object_or_404(Course, id=course_id)

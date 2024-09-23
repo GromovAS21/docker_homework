@@ -1,4 +1,6 @@
+from django.utils.decorators import method_decorator
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import filters, viewsets
 from rest_framework.permissions import AllowAny, IsAdminUser
 
@@ -7,6 +9,24 @@ from users.permissions import IsUserProfile
 from users.serializers import PaymentSerializer, UserSerializer, ProfileNotUserSerializer
 
 
+@method_decorator(name='list', decorator=swagger_auto_schema(
+    operation_description="Контроллер для получения списка всех пользователь"
+))
+@method_decorator(name='retrieve', decorator=swagger_auto_schema(
+    operation_description="Контроллер для получения конкретного пользователя"
+))
+@method_decorator(name='create', decorator=swagger_auto_schema(
+    operation_description="Контроллер для создания пользователя"
+))
+@method_decorator(name='update', decorator=swagger_auto_schema(
+    operation_description="Контроллер для обновления информации о пользователе"
+))
+@method_decorator(name='partial_update', decorator=swagger_auto_schema(
+    operation_description="Контроллер для частичного изменения информации о пользователе"
+))
+@method_decorator(name='destroy', decorator=swagger_auto_schema(
+    operation_description="Контроллер для удаления пользователя"
+))
 class UserViewSet(viewsets.ModelViewSet):
     """
     API эндпоинт для модели User
@@ -16,6 +36,10 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
 
     def get_permissions(self):
+        """
+        Получаем права для действий
+        """
+
         if self.action == "create":
             self.permission_classes = (AllowAny,)
         elif self.action == "list":
@@ -27,11 +51,19 @@ class UserViewSet(viewsets.ModelViewSet):
         return super().get_permissions()
 
     def perform_create(self, serializer):
+        """
+        Создание нового пользователя с активным статусом
+        """
+
         user = serializer.save(is_active=True)
         user.set_password(user.password)
         user.save()
 
     def get_serializer_class(self):
+        """
+        В зависимости от действия возвращаем нужный сериализатор
+        """
+
         if self.action == "retrieve":
             object = self.get_object()
             if self.request.user.id != object.id:
@@ -39,6 +71,24 @@ class UserViewSet(viewsets.ModelViewSet):
         return UserSerializer
 
 
+@method_decorator(name='list', decorator=swagger_auto_schema(
+    operation_description="Контроллер для получения списка всех оплат"
+))
+@method_decorator(name='retrieve', decorator=swagger_auto_schema(
+    operation_description="Контроллер для получения конкретной оплаты"
+))
+@method_decorator(name='create', decorator=swagger_auto_schema(
+    operation_description="Контроллер для создания оплаты"
+))
+@method_decorator(name='update', decorator=swagger_auto_schema(
+    operation_description="Контроллер для обновления информации о оплате"
+))
+@method_decorator(name='partial_update', decorator=swagger_auto_schema(
+    operation_description="Контроллер для частичного изменения информации об оплате"
+))
+@method_decorator(name='destroy', decorator=swagger_auto_schema(
+    operation_description="Контроллер для удаления оплаты"
+))
 class PaymentViewSet(viewsets.ModelViewSet):
     """
     API эндпоинт для модели Payment
