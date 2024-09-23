@@ -54,7 +54,7 @@ class Payment(models.Model):
         ("Наличные", "Наличные"),
         ("Перевод на счет", "Перевод на счет")
     ]
-    user = models.ForeignKey(
+    owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         verbose_name="Пользователь",
@@ -65,8 +65,6 @@ class Payment(models.Model):
     payment_date = models.DateTimeField(
         verbose_name="Дата платежа",
         auto_now_add=True,
-        null=True,
-        blank=True,
     )
     paid_course = models.ForeignKey(
         Course,
@@ -86,14 +84,30 @@ class Payment(models.Model):
     )
     amount = models.IntegerField(
         verbose_name="Сумма платежа",
-        null=True,
-        blank=True,
     )
     method = models.CharField(
         choices=STATUS_CHOICES,
         default="Перевод на счет",
         max_length=50,
         verbose_name="Метод оплаты",
+    )
+    session_id = models.CharField(
+        max_length=255,
+        verbose_name="ID сессии",
+        blank=True,
+        null=True,
+    )
+    link = models.URLField(
+        max_length=400,
+        verbose_name="Ссылка на оплату",
+        blank=True,
+        null=True,
+    )
+    status = models.CharField(
+        max_length=50,
+        verbose_name="Статус платежа",
+        blank=True,
+        null=True,
     )
 
     class Meta:

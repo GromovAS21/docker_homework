@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     "users",
     "materials",
     "django_filters",
+    "drf_yasg",
+    "corsheaders",
+
 ]
 
 MIDDLEWARE = [
@@ -56,6 +59,15 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware"
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://localhost:8000"
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://read-and-write.example.com"
 ]
 
 REST_FRAMEWORK = {
@@ -144,3 +156,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR / "media")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "users.User"
+
+STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
