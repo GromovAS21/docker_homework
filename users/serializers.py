@@ -10,7 +10,17 @@ class PaymentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Payment
-        fields = "__all__"
+        exclude = ("status",)
+
+
+class PaymentStatusSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для модели Payment
+    """
+
+    class Meta:
+        model = Payment
+        fields = ("payment_date", "amount", "status",)
 
 
 class UserSerializer(serializers.ModelSerializer):

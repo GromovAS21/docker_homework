@@ -4,11 +4,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import filters, viewsets
 from rest_framework.permissions import AllowAny, IsAdminUser
+from rest_framework.response import Response
 
 from users.models import Payment, User
 from users.permissions import IsUserProfile
-from users.serializers import PaymentSerializer, UserSerializer, ProfileNotUserSerializer
-from users.serivces import create_product, create_price, create_session
+from users.serializers import PaymentSerializer, UserSerializer, ProfileNotUserSerializer, PaymentStatusSerializer
+from users.serivces import create_product, create_price, create_session, check_status_pay
 
 
 @method_decorator(name='list', decorator=swagger_auto_schema(
@@ -115,6 +116,27 @@ class PaymentViewSet(viewsets.ModelViewSet):
         payment.session_id = session_id
         payment.link = link
         payment.save()
+
+    def retrieve(self, request, *args, **kwargs):
+        """
+        Получаем статус оплаты
+        """
+
+        payment = self.get_object()
+        status = check_status_pay(payment)
+        payment.status = status
+        payment.save()
+        serializer = self.get_serializer(payment)
+        return Response(serializer.data)
+
+    def get_serializer_class(self):
+        """
+        В зависимости от действия возвращаем нужный сериализатор
+        """
+
+        if self.action == "retrieve":
+            return PaymentStatusSerializer
+        return PaymentSerializer
 
 
 def success_pay(request):

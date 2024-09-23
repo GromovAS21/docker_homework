@@ -103,6 +103,12 @@ class Payment(models.Model):
         blank=True,
         null=True,
     )
+    status = models.CharField(
+        max_length=50,
+        verbose_name="Статус платежа",
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = "Платеж"
