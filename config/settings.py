@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "materials",
     "django_filters",
     "drf_yasg",
+    "corsheaders",
 
 ]
 
@@ -58,6 +59,15 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware"
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://localhost:8000"
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://read-and-write.example.com"
 ]
 
 REST_FRAMEWORK = {

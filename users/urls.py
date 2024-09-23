@@ -20,6 +20,7 @@ urlpatterns = [
     path('users/token/', TokenObtainPairView.as_view(permission_classes=(AllowAny,)), name='token_obtain_pair'),
     path('users/token/refresh/', TokenRefreshView.as_view(permission_classes=(AllowAny,)), name='token_refresh'),
 
+    path('success_pay/', success_pay, name="success_pay")
 ] + router.urls
 
 
