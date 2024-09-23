@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 
 from users.models import Payment, User
-from users.permissions import IsUserProfile
+from users.permissions import IsUserProfile, IsModer, IsOwner
 from users.serializers import PaymentSerializer, UserSerializer, ProfileNotUserSerializer, PaymentStatusSerializer
 from users.serivces import create_product, create_price, create_session, check_status_pay
 
@@ -109,7 +109,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
         Создание новой оплаты для текущего пользователя
         """
 
-        payment = serializer.save(user=self.request.user)
+        payment = serializer.save(owner=self.request.user)
         stripe_product = create_product(payment)
         stripe_price = create_price(payment, stripe_product)
         session_id, link = create_session(stripe_price)
@@ -138,6 +138,18 @@ class PaymentViewSet(viewsets.ModelViewSet):
             return PaymentStatusSerializer
         return PaymentSerializer
 
+    def get_permissions(self):
+        if self.action == "create":
+            self.permission_classes = (~IsModer,)
+        elif self.action == "list":
+            self.permission_classes = (IsModer | IsAdminUser,)
+        elif self.action == "retrieve":
+            self.permission_classes = (IsModer | IsOwner | IsAdminUser,)
+        elif self.action == "update":
+            self.permission_classes = (IsAdminUser,)
+        elif self.action == "destroy":
+            self.permission_classes = (IsAdminUser,)
+        return super().get_permissions()
 
 def success_pay(request):
     """

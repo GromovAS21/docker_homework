@@ -54,7 +54,7 @@ class Payment(models.Model):
         ("Наличные", "Наличные"),
         ("Перевод на счет", "Перевод на счет")
     ]
-    user = models.ForeignKey(
+    owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         verbose_name="Пользователь",
