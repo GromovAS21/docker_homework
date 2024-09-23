@@ -34,7 +34,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == "retrieve":
             object = self.get_object()
-            if self.request.user.pk != object.pk:
+            if self.request.user.id != object.id:
                 return ProfileNotUserSerializer
         return UserSerializer
 

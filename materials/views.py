@@ -1,3 +1,5 @@
+from django.utils.decorators import method_decorator
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -10,6 +12,18 @@ from materials.serializers import CourseSerializer, LessonSerializer
 from users.permissions import IsModer, IsOwner
 
 
+@method_decorator(name='list', decorator=swagger_auto_schema(
+    operation_description="Контроллер для получения списка всех курсов"
+))
+@method_decorator(name='retrieve', decorator=swagger_auto_schema(
+    operation_description="Контроллер для получения конкретного курсов"
+))
+@method_decorator(name='create', decorator=swagger_auto_schema(
+    operation_description="Контроллер для создания курса"
+))
+@method_decorator(name='update', decorator=swagger_auto_schema(
+    operation_description="Контроллер для обновления информации о курсе"
+))
 class CourseViewSet(viewsets.ModelViewSet):
     """
     API эндпоинт для модели Course
@@ -107,10 +121,3 @@ class SubscriptionViewSet(APIView):
             Subscription.objects.create(user=user_id, course=course_item)
             message = "Подписка оформлена"
         return Response({"message": message})
-
-
-
-
-
-
-
