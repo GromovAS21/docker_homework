@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
 )
 
 from users.apps import UsersConfig
-from users.views import PaymentViewSet, UserViewSet
+from users.views import PaymentViewSet, UserViewSet, success_pay
 
 app_name = UsersConfig.name
 
@@ -19,6 +19,7 @@ router.register(r"payments", PaymentViewSet, basename="payments")
 urlpatterns = [
     path('users/token/', TokenObtainPairView.as_view(permission_classes=(AllowAny,)), name='token_obtain_pair'),
     path('users/token/refresh/', TokenRefreshView.as_view(permission_classes=(AllowAny,)), name='token_refresh'),
+
 ] + router.urls
 
 
