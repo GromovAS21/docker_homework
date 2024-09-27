@@ -97,11 +97,13 @@ class Subscription(models.Model):
         "users.User",
         on_delete=models.CASCADE,
         verbose_name="Пользователь"
+
     )
     course = models.ForeignKey(
         Course,
         on_delete=models.CASCADE,
         verbose_name="Курс"
+
     )
 
     class Meta:
