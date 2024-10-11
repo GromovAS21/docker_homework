@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-8c8yshki_*t8cjv-ylhqs5qj@6%f5t4w&vgv!8_=5=ktgx)%2o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -67,6 +67,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "https://localhost:8000"
 ]
+CORS_ALLOW_ALL_ORIGINS = False
 
 CSRF_TRUSTED_ORIGINS = [
     "https://read-and-write.example.com"
@@ -106,11 +107,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.getenv("NAME"),
-        "USER": os.getenv("USER_NAME"),
-        "HOST": os.getenv("HOST"),
-        "PORT": os.getenv("PORT"),
-        "PASSWORD": os.getenv("PASSWORD"),
+        "NAME": os.getenv("POSTGRES_DB"),
+        "USER": os.getenv("POSTGRES_USER"),
+        "HOST": os.getenv("POSTGRES_HOST"),
+        "PORT": os.getenv("POSTGRES_PORT"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
     }
 }
 
