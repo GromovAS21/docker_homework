@@ -9,6 +9,8 @@ from rest_framework.views import APIView
 from materials.models import Course, Lesson, Subscription
 from materials.paginators import ViewPagination
 from materials.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
+from materials.tasks import send_email_about_update_course, send_email_about_create_lesson, \
+    send_mail_about_update_lesson
 from users.permissions import IsModer, IsOwner
 
 
@@ -53,6 +55,14 @@ class CourseViewSet(viewsets.ModelViewSet):
         course.owner = self.request.user
         course.save()
 
+    def update(self, request, *args, **kwargs):
+        course = self.get_object()
+        serializer = self.get_serializer(course, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            send_email_about_update_course.delay(course.id)
+            return Response(serializer.data)
+
 
 class LessonCreateAPIView(generics.CreateAPIView):
     """
@@ -64,11 +74,13 @@ class LessonCreateAPIView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         """
-        Добавление владельца к уроку при создание
+        Добавление владельца к уроку при создании и отправке сообщения подписчикам об этом
         """
         lesson = serializer.save()
         lesson.owner = self.request.user
         lesson.save()
+        if lesson.course:
+            send_email_about_create_lesson.delay(lesson.course.id, lesson.id)
 
 
 class LessonListAPIView(generics.ListAPIView):
@@ -99,6 +111,18 @@ class LessonUpdateAPIView(generics.UpdateAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
     permission_classes = (IsAuthenticated, IsModer | IsOwner)
+
+    def perform_update(self, serializer):
+        """
+        Отправка сообщения подписчикам об изменении урока
+        """
+        lesson = self.get_object()
+        serializer.save()
+        send_mail_about_update_lesson.delay(lesson.course.id, lesson.id)
+
+
+
+
 
 
 class LessonDestroyAPIView(generics.DestroyAPIView):
@@ -133,4 +157,5 @@ class SubscriptionViewSet(APIView):
         else:
             Subscription.objects.create(user=user_id, course=course_item)
             message = "Подписка оформлена"
+            send_email_about_update_course.delay(course_item.id)
         return Response({"message": message})

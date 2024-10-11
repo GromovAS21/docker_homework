@@ -9,7 +9,7 @@ class LessonSerializer(serializers.ModelSerializer):
     """
     Сериализатор для модели урока
     """
-    url_video = serializers.CharField(validators=[url_validator])
+    url_video = serializers.CharField(validators=[url_validator], read_only=True)
 
     class Meta:
         model = Lesson
